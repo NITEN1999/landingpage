@@ -1,322 +1,573 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Niten Manjunath | Software Engineer</title>
+<title>Niten M | Senior MEAN & MERN Engineer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 
 <style>
-/* =========================
-   MOBILE FIRST DESIGN
-========================= */
+
+/* ================= THEME ================= */
 
 :root{
-  --bg:#0b0f17;
-  --card:#111827;
-  --text:#e5e7eb;
-  --accent:#22c55e;
-  --secondary:#60a5fa;
+--bg:#0a0a0a;
+--card:#111;
+--text:#fff;
+--muted:#888;
+--border:#222;
+--accent:#6366f1;
+--terminal:#0d0d0d;
 }
 
-[data-theme="light"]{
-  --bg:#ffffff;
-  --card:#f3f4f6;
-  --text:#111827;
-  --accent:#16a34a;
-  --secondary:#2563eb;
-}
-
-*{
-  box-sizing:border-box;
+.light{
+--bg:#f8fafc;
+--card:#ffffff;
+--text:#111;
+--muted:#555;
+--border:#ddd;
+--accent:#4f46e5;
+--terminal:#ffffff;
 }
 
 body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
+margin:0;
+font-family:'Inter',sans-serif;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+transition:.3s;
 }
 
-/* =========================
-   BACKGROUND ANIMATION
-========================= */
+/* ================= BACKGROUND ================= */
 
-.bg{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:
-  radial-gradient(circle at 20% 30%,rgba(34,197,94,0.15),transparent),
-  radial-gradient(circle at 80% 70%,rgba(96,165,250,0.15),transparent);
-  animation:bgMove 10s infinite alternate;
-  z-index:-1;
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
 }
 
-@keyframes bgMove{
-  from{transform:translateY(0px)}
-  to{transform:translateY(-50px)}
+/* ================= NAVBAR ================= */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+background:rgba(0,0,0,.6);
+backdrop-filter:blur(10px);
+border-bottom:1px solid var(--border);
+z-index:1000;
 }
 
-/* =========================
-   NAVBAR MOBILE FIRST
-========================= */
+.light nav{
+background:rgba(255,255,255,.8);
+}
 
-.nav{
-  position:fixed;
-  top:0;
-  width:100%;
-  padding:12px 16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:rgba(0,0,0,0.6);
-  backdrop-filter:blur(12px);
-  z-index:999;
+.nav-container{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 18px;
 }
 
 .logo{
-  font-weight:bold;
+font-weight:600;
 }
 
-.nav-right{
-  display:flex;
-  gap:10px;
-  align-items:center;
+.hamburger{
+display:flex;
+flex-direction:column;
+gap:4px;
+cursor:pointer;
 }
 
-.nav a{
-  color:var(--text);
-  text-decoration:none;
-  font-size:14px;
+.hamburger span{
+width:22px;
+height:2px;
+background:var(--text);
+}
+
+.nav-menu{
+position:absolute;
+top:55px;
+left:0;
+width:100%;
+background:var(--bg);
+display:flex;
+flex-direction:column;
+gap:15px;
+padding:15px;
+transform:translateY(-200%);
+transition:.3s;
+border-bottom:1px solid var(--border);
+}
+
+.nav-menu.active{
+transform:translateY(0);
+}
+
+.nav-menu a{
+color:var(--muted);
+text-decoration:none;
 }
 
 .theme-btn{
-  background:none;
-  border:1px solid var(--accent);
-  color:var(--accent);
-  padding:5px 10px;
-  border-radius:6px;
+cursor:pointer;
+padding:6px 10px;
+border:1px solid var(--border);
+border-radius:6px;
+width:fit-content;
 }
 
-/* =========================
-   SECTIONS
-========================= */
-
-.section{
-  padding:80px 20px;
-}
-
-/* =========================
-   TERMINAL INTRO
-========================= */
-
-.terminal{
-  background:#000;
-  padding:20px;
-  border-radius:10px;
-  font-family:monospace;
-}
-
-.line{
-  opacity:0;
-  animation:typing 1s forwards;
-}
-
-.line:nth-child(1){animation-delay:1s}
-.line:nth-child(2){animation-delay:2s}
-.line:nth-child(3){animation-delay:3s}
-
-@keyframes typing{
-  to{opacity:1}
-}
-
-/* =========================
-   PROJECT TERMINAL CARDS
-========================= */
-
-.project{
-  background:#000;
-  margin-top:20px;
-  padding:15px;
-  border-radius:10px;
-  font-family:monospace;
-}
-
-.enter-btn{
-  margin-top:10px;
-  padding:8px;
-  border:none;
-  background:var(--accent);
-  color:black;
-  width:100%;
-  border-radius:5px;
-}
-
-.project-info{
-  display:none;
-  margin-top:10px;
-}
-
-.project.active .project-info{
-  display:block;
-  animation:fade .5s;
-}
-
-@keyframes fade{
-  from{opacity:0}
-  to{opacity:1}
-}
-
-/* =========================
-   ARCHITECTURE DIAGRAM
-========================= */
-
-.arch-box{
-  background:var(--card);
-  padding:15px;
-  margin:10px 0;
-  border-radius:10px;
-  text-align:center;
-  animation:float 4s infinite alternate;
-}
-
-@keyframes float{
-  from{transform:translateY(0)}
-  to{transform:translateY(-10px)}
-}
-
-/* =========================
-   EXPERIENCE TIMELINE
-========================= */
-
-.timeline-item{
-  background:var(--card);
-  padding:15px;
-  margin:15px 0;
-  border-radius:10px;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer{
-  padding:20px;
-  text-align:center;
-  border-top:1px solid var(--card);
-}
-
-/* =========================
-   DESKTOP ENHANCEMENT
-========================= */
+/* desktop */
 
 @media(min-width:768px){
 
-  .projects-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
-  }
+.hamburger{display:none;}
 
-  .arch-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
-    gap:15px;
-  }
+.nav-menu{
+position:static;
+transform:none;
+flex-direction:row;
+background:none;
+width:auto;
+padding:0;
+align-items:center;
+gap:25px;
+}
+
+.nav-container{
+padding:18px 40px;
+}
 
 }
-</style>
 
+/* ================= HERO ================= */
+
+.hero{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:80px 20px;
+}
+
+.hero h1{
+font-size:32px;
+background:linear-gradient(90deg,#6366f1,#ec4899);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+color:var(--muted);
+margin-top:10px;
+}
+
+.tagline{
+margin-top:15px;
+max-width:500px;
+font-size:13px;
+color:var(--muted);
+}
+
+/* ================= SECTION ================= */
+
+.section{
+padding:60px 18px;
+max-width:1100px;
+margin:auto;
+}
+
+.grid{
+display:grid;
+gap:16px;
+}
+
+/* ================= EXPERIENCE ================= */
+
+.experience-card{
+background:var(--card);
+border:1px solid var(--border);
+border-radius:10px;
+padding:18px;
+transition:.3s;
+}
+
+.experience-card:hover{
+border-color:var(--accent);
+transform:translateY(-4px);
+}
+
+.exp-role{
+font-weight:600;
+font-size:15px;
+}
+
+.exp-company{
+color:var(--accent);
+font-size:13px;
+margin-top:4px;
+}
+
+.exp-date{
+color:var(--muted);
+font-size:12px;
+margin-top:2px;
+}
+
+.exp-desc{
+color:var(--muted);
+font-size:13px;
+margin-top:10px;
+}
+.timeline{
+border-left:2px solid var(--accent);
+padding-left:20px;
+position:relative;
+}
+
+.timeline-item{
+margin-bottom:30px;
+position:relative;
+}
+
+.timeline-item::before{
+content:"";
+position:absolute;
+left:-28px;
+top:6px;
+width:12px;
+height:12px;
+background:var(--accent);
+border-radius:50%;
+}
+
+.timeline-item h3{
+font-size:15px;
+margin-bottom:6px;
+}
+
+.timeline-item span{
+font-size:12px;
+color:var(--muted);
+}
+
+.timeline-item p{
+font-size:13px;
+color:var(--muted);
+margin-top:8px;
+max-width:700px;
+}
+
+
+/* ================= TERMINAL CARD ================= */
+
+.terminal-card{
+background:var(--terminal);
+border:1px solid var(--border);
+border-radius:10px;
+overflow:hidden;
+font-family:monospace;
+transition:.3s;
+}
+
+.terminal-card:hover{
+border-color:var(--accent);
+transform:translateY(-5px);
+}
+
+.terminal-header{
+display:flex;
+gap:6px;
+padding:8px 12px;
+background:#111;
+}
+
+.light .terminal-header{
+background:#eee;
+}
+
+.dot{
+width:10px;
+height:10px;
+border-radius:50%;
+}
+
+.red{background:#ff5f56;}
+.yellow{background:#ffbd2e;}
+.green{background:#27c93f;}
+
+.terminal-body{
+padding:14px;
+font-size:13px;
+}
+
+.command{
+color:var(--accent);
+}
+
+.output{
+color:var(--muted);
+margin-top:10px;
+opacity:0;
+max-height:0;
+overflow:hidden;
+transition:.4s;
+}
+
+.terminal-card.active .output{
+opacity:1;
+max-height:200px;
+}
+
+.enter-btn{
+margin-top:10px;
+background:none;
+border:1px solid var(--accent);
+color:var(--accent);
+padding:4px 10px;
+cursor:pointer;
+border-radius:6px;
+}
+
+/* ================= ARCHITECTURE ================= */
+
+.arch-grid{
+display:flex;
+flex-direction:column;
+gap:12px;
+align-items:center;
+}
+
+.arch-node{
+padding:10px 16px;
+background:var(--card);
+border:1px solid var(--border);
+border-radius:8px;
+font-size:13px;
+}
+
+.arch-line{
+width:2px;
+height:20px;
+background:var(--accent);
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+margin-top:80px;
+border-top:1px solid var(--border);
+background:rgba(0,0,0,.4);
+backdrop-filter:blur(10px);
+}
+
+.light footer{
+background:rgba(255,255,255,.6);
+}
+
+.footer-container{
+max-width:1100px;
+margin:auto;
+padding:30px 20px;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:12px;
+text-align:center;
+}
+
+.footer-name{
+font-weight:600;
+font-size:16px;
+}
+
+.footer-email{
+color:var(--accent);
+text-decoration:none;
+font-size:14px;
+}
+
+.footer-email:hover{
+opacity:.8;
+}
+
+.footer-theme{
+cursor:pointer;
+padding:6px 12px;
+border:1px solid var(--border);
+border-radius:6px;
+font-size:13px;
+}
+
+.footer-copy{
+color:var(--muted);
+font-size:12px;
+margin-top:6px;
+}
+
+/* desktop */
+
+@media(min-width:768px){
+
+.hero h1{font-size:52px;}
+
+.grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(min-width:1024px){
+
+.grid{
+grid-template-columns:repeat(3,1fr);
+}
+
+}
+
+</style>
 </head>
 
 <body>
 
-<div class="bg"></div>
+<canvas id="bg"></canvas>
 
 <!-- NAVBAR -->
-<div class="nav">
 
-<div class="logo">Niten.dev</div>
+<nav>
 
-<div class="nav-right">
+<div class="nav-container">
 
-<a href="#projects">Projects</a>
-<a href="#architecture">Architecture</a>
+<div class="logo">NITEN M</div>
+
+<div class="hamburger" onclick="toggleMenu()">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<div class="nav-menu" id="navMenu">
+
 <a href="#experience">Experience</a>
+<a href="#architecture">Architecture</a>
+<a href="#projects">Projects</a>
 
-<button class="theme-btn" onclick="toggleTheme()">Theme</button>
+<div class="theme-btn" onclick="toggleTheme()">Toggle Theme</div>
 
 </div>
+
 </div>
 
-<!-- HERO TERMINAL -->
-<section class="section">
+</nav>
 
-<div class="terminal">
+<!-- HERO -->
 
-<div class="line">> Initializing portfolio...</div>
-<div class="line">> Loading software engineer profile...</div>
-<div class="line">> Welcome, Niten Manjunath</div>
+<section class="hero">
+
+<h1 id="title">Senior MEAN & MERN Engineer</h1>
+
+<div class="subtitle">
+Angular • React • Node.js • Microfrontends • GraphQL
+</div>
+<div class="tagline">
+Building enterprise-scale frontend platforms with microfrontend architecture and production-grade backend systems.
+</div>
+
+</section>
+
+<!-- EXPERIENCE -->
+
+<!-- EXPERIENCE -->
+
+<section id="experience" class="section">
+<h2>Experience</h2>
+<div class="timeline">
+<div class="timeline-item">
+<h3>Senior Systems Engineer — Infosys</h3>
+<span>2024 — Present</span>
+<p>Enterprise Angular 18+, CVA components, microfrontend architecture.</p>
+</div>
+<div class="timeline-item">
+<h3>System Engineer</h3>
+<span>2022 — 2024</span>
+<p>Node.js APIs, MongoDB, JWT authentication, scalable UI systems.</p>
+</div>
+</div>
+</section>
+
+
+<!-- ARCHITECTURE -->
+
+<section id="architecture" class="section">
+
+<h2>Production Architecture</h2>
+
+<div class="arch-grid">
+
+<div class="arch-node">Client (Angular / React)</div>
+<div class="arch-line"></div>
+
+<div class="arch-node">Microfrontend Shell</div>
+<div class="arch-line"></div>
+
+<div class="arch-node">Remote Modules</div>
+<div class="arch-line"></div>
+
+<div class="arch-node">API Gateway</div>
+<div class="arch-line"></div>
+
+<div class="arch-node">Node.js Microservices</div>
+<div class="arch-line"></div>
+
+<div class="arch-node">MongoDB / PostgreSQL</div>
 
 </div>
 
 </section>
 
 <!-- PROJECTS -->
+
 <section id="projects" class="section">
 
 <h2>Projects</h2>
 
-<div class="projects-grid">
+<div class="grid">
 
-<div class="project">
+<div class="terminal-card">
 
-<div>> microfrontend-platform</div>
-
-<button class="enter-btn" onclick="toggleProject(this)">
-Press Enter
-</button>
-
-<div class="project-info">
-
-Microfrontend architecture using Module Federation<br>
-React + Webpack + Dynamic Remote Loading
-
+<div class="terminal-header">
+<div class="dot red"></div>
+<div class="dot yellow"></div>
+<div class="dot green"></div>
 </div>
 
+<div class="terminal-body">
+
+<div class="command">
+$ run insurance-mfe-platform
 </div>
 
-<div class="project">
+<button class="enter-btn">ENTER</button>
 
-<div>> real-time-system</div>
+<div class="output">
 
-<button class="enter-btn" onclick="toggleProject(this)">
-Press Enter
-</button>
+Microfrontend architecture using Angular Module Federation.
 
-<div class="project-info">
+Stack:
+Angular • NgRx • Module Federation
 
-Real-time balance update system<br>
-Node.js + WebSocket + Kafka
-
-</div>
-
-</div>
-
-<div class="project">
-
-<div>> ci-cd-pipeline</div>
-
-<button class="enter-btn" onclick="toggleProject(this)">
-Press Enter
-</button>
-
-<div class="project-info">
-
-Production CI/CD pipeline<br>
-GitHub Actions + Docker + Kubernetes
+Status: ✓ Production Ready
 
 </div>
 
@@ -324,85 +575,178 @@ GitHub Actions + Docker + Kubernetes
 
 </div>
 
-</section>
+<div class="terminal-card">
 
-<!-- ARCHITECTURE -->
-<section id="architecture" class="section">
+<div class="terminal-header">
+<div class="dot red"></div>
+<div class="dot yellow"></div>
+<div class="dot green"></div>
+</div>
 
-<h2>Architecture</h2>
+<div class="terminal-body">
 
-<div class="arch-grid">
+<div class="command">
+$ start auth-service
+</div>
 
-<div class="arch-box">Shell App</div>
+<button class="enter-btn">ENTER</button>
 
-<div class="arch-box">Remote Microfrontend</div>
+<div class="output">
 
-<div class="arch-box">API Gateway</div>
+JWT authentication service with RBAC.
 
-<div class="arch-box">Auth Service</div>
+Stack:
+Node.js • MongoDB • JWT
 
-<div class="arch-box">Event Bus</div>
-
-<div class="arch-box">Database</div>
+Status: ✓ Running
 
 </div>
 
-</section>
+</div>
 
-<!-- EXPERIENCE -->
-<section id="experience" class="section">
+</div>
 
-<h2>Experience</h2>
+<div class="terminal-card">
 
-<div class="timeline-item">
+<div class="terminal-header">
+<div class="dot red"></div>
+<div class="dot yellow"></div>
+<div class="dot green"></div>
+</div>
 
-Software Engineer — 2022-Present<br>
-Frontend architecture, microfrontends, real-time systems
+<div class="terminal-body">
+
+<div class="command">
+$ deploy graphql-gateway
+</div>
+
+<button class="enter-btn">ENTER</button>
+
+<div class="output">
+
+GraphQL gateway for microservices communication.
+
+Stack:
+GraphQL • Node.js • Kafka
+
+Status: ✓ Live
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
 </section>
 
 <!-- FOOTER -->
-<div class="footer">
 
-Contact: niten.manjunath.career@gmail.com
+<footer>
+
+<div class="footer-container">
+
+<div class="footer-name">
+Niten M
+</div>
+
+<a href="mailto:niten.manjunath.career@gmail.com" class="footer-email">
+niten.manjunath.career@gmail.com
+</a>
+
+<div class="footer-theme" onclick="toggleTheme()">
+Toggle Theme
+</div>
+
+<div class="footer-copy">
+© 2026 Niten M • Senior MEAN & MERN Engineer
+</div>
 
 </div>
 
+</footer>
+
 <script>
 
-/* =========================
-   THEME TOGGLE
-========================= */
+/* NAV */
+
+function toggleMenu(){
+navMenu.classList.toggle("active");
+}
+
+/* THEME */
 
 function toggleTheme(){
 
-const theme=document.body.getAttribute("data-theme");
+document.body.classList.toggle("light");
 
-if(theme==="light"){
-
-document.body.removeAttribute("data-theme");
-
-}else{
-
-document.body.setAttribute("data-theme","light");
+localStorage.setItem("theme",
+document.body.classList.contains("light")?"light":"dark");
 
 }
 
+if(localStorage.getItem("theme")==="light"){
+document.body.classList.add("light");
 }
 
-/* =========================
-   PROJECT TERMINAL ENTER
-========================= */
+/* TERMINAL */
 
-function toggleProject(btn){
+document.querySelectorAll(".enter-btn").forEach(btn=>{
 
-const project=btn.parentElement;
+btn.onclick=()=>{
 
-project.classList.toggle("active");
+const card=btn.closest(".terminal-card");
+
+card.classList.toggle("active");
+
+gsap.fromTo(card.querySelector(".output"),
+{opacity:0,y:10},
+{opacity:1,y:0,duration:.4});
+
+};
+
+});
+
+/* GSAP HERO */
+
+gsap.from("#title",{opacity:0,y:40,duration:1});
+
+/* THREE BACKGROUND */
+
+const scene=new THREE.Scene();
+
+const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+
+const renderer=new THREE.WebGLRenderer({canvas:bg,alpha:true});
+
+renderer.setSize(window.innerWidth,window.innerHeight);
+
+camera.position.z=5;
+
+const geometry=new THREE.TorusGeometry(3,1,16,100);
+
+const material=new THREE.MeshBasicMaterial({
+color:0x6366f1,
+wireframe:true
+});
+
+const torus=new THREE.Mesh(geometry,material);
+
+scene.add(torus);
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+torus.rotation.x+=0.003;
+torus.rotation.y+=0.003;
+
+renderer.render(scene,camera);
 
 }
+
+animate();
 
 </script>
 
